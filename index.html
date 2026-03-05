@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #1a001a, #000000);
+    color: white;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Password Screen */
+#passwordScreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: none;
+    text-align: center;
+}
+
+button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background: #ff007f;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff4da6;
+}
+
+h1 {
+    margin-top: 40px;
+    font-size: 3rem;
+    text-shadow: 0 0 20px #ff007f;
+}
+
+img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 5px solid #ff007f;
+    margin-top: 20px;
+    box-shadow: 0 0 40px #ff007f;
+}
+
+.message {
+    margin: 30px auto;
+    max-width: 600px;
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+/* Fireworks Canvas */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Password Screen -->
+<div id="passwordScreen">
+    <h2>Enter Secret Password 🔐</h2>
+    <input type="password" id="passwordInput" placeholder="Enter password">
+    <button onclick="checkPassword()">Unlock ❤️</button>
+</div>
+
+<!-- Main Content -->
+<h1>🎉 Happy Birthday My Love ❤️</h1>
+
+<img src="herphoto.jpg" alt="Her Photo">
+
+<div class="message">
+    You are my heart, my happiness, and my forever.  
+    Every moment with you feels magical.  
+    Today the world celebrates the most beautiful soul I know.  
+    I love you more than words can ever explain. 💖
+</div>
+
+<audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="fireworks"></canvas>
+
+<script>
+const correctPassword = "iloveyou";
+
+function checkPassword() {
+    const input = document.getElementById("passwordInput").value;
+    if (input === correctPassword) {
+        document.getElementById("passwordScreen").style.display = "none";
+        document.getElementById("bgMusic").play();
+        startFireworks();
+    } else {
+        alert("Wrong password 💔 Try again!");
+    }
+}
+
+/* Fireworks Effect */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+function createFirework() {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height / 2;
+
+    for (let i = 0; i < 100; i++) {
+        particles.push({
+            x: x,
+            y: y,
+            radius: 2,
+            color: `hsl(${Math.random() * 360},100%,60%)`,
+            speedX: (Math.random() - 0.5) * 6,
+            speedY: (Math.random() - 0.5) * 6,
+            life: 100
+        });
+    }
+}
+
+function updateParticles() {
+    for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.life--;
+
+        if (p.life <= 0) {
+            particles.splice(i, 1);
+            i--;
+        }
+    }
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    updateParticles();
+    requestAnimationFrame(animate);
+}
+
+function startFireworks() {
+    setInterval(createFirework, 1500);
+    animate();
+}
+</script>
+
+</body>
+</html>
