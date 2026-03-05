@@ -1,0 +1,21 @@
+.photo-slider{
+position:relative;
+width:250px;
+height:250px;
+margin:auto;
+}
+
+.photo-slider img{
+position:absolute;
+width:250px;
+height:250px;
+border-radius:50%;
+border:5px solid #ff007f;
+box-shadow:0 0 40px #ff007f;
+opacity:0;
+transition:opacity 1s;
+}
+
+.photo-slider img.active{
+opacity:1;
+}
